@@ -1,0 +1,104 @@
+#root .main-navigation  a {
+    display: inline-block;
+    margin-right: 10px;
+    color: #0aa;
+    font-weight: 600;
+    text-decoration: none;;
+}
+
+#root {
+    font-family: Robotic, sans-serif;
+}
+
+.options-list {
+    margin: 0 auto;
+    padding: 0;
+}
+
+.options-list li {
+    list-style: none;
+    cursor: pointer;
+    background: yellow;
+    padding: 5px 10px;
+    width: 300px;
+    margin: 10px 0;
+    display: block;
+    text-align: center;
+}
+
+.history-list {
+    max-height: 200px;
+    width: 250px;
+    overflow-y: auto;
+}
+
+.history-list ul {
+    margin: 0;
+    padding: 0;
+}
+
+.history-list ul li {
+    list-style: none;
+    font-size: 14px;
+}
+
+.all-words-list ul {
+    padding: 0;
+}
+
+.all-words-list ul li {
+    list-style: none;
+    display: block;
+    width: 300px;
+    margin: 10px 0;
+}
+
+.all-words-list ul li span {
+    display: inline-block;
+    width: 250px;
+    border-bottom: 1px #777 solid;
+}
+
+.all-words-list ul li span strong {
+    padding: 0 10px 0 0;
+}
+
+.all-words-list ul li button {
+    background: red;
+    color: yellow;
+    border: none;
+    cursor: pointer;
+}
+
+.add-item label{
+    display: block;
+    margin: 10px 0;
+}
+
+.add-item button {
+    width: 300px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.add-item label span {
+    display: inline-block;
+    width: 65px;
+}
+
+.add-item label input {
+    outline: none;
+    height: 30px;
+    padding: 0 5px;
+    width: 220px;
+}
+
+.lang {
+    display: inline-block;
+    background: blue;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+}

@@ -1,0 +1,66 @@
+version: "3"
+services:
+
+  server:
+    build:
+      context: .
+      dockerfile: server.Dockerfile
+    container_name: server
+    networks:
+      - app-network
+    ports:
+      - "3005:3005"
+    volumes:
+    - ./server:/home/server
+    depends_on:
+      - mongo
+    command:
+      bash -c "npm i -g @nestjs/cli && npm i && npm start dev"
+
+  front:
+    build:
+      context: .
+      dockerfile: front.Dockerfile
+    container_name: react
+    networks:
+      - app-network
+    volumes:
+    - ./front:/home/front
+
+  web:
+    image: nginx:mainline-alpine
+    container_name: webserver
+    ports:
+      - "88:80"
+    volumes:
+      - ./nginx-conf:/etc/nginx/conf.d
+      
+    depends_on:
+      - server
+      - front
+      - mongo
+    networks:
+      - app-network
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    # environment:
+      # MONGO_INITDB_ROOT_USERNAME: "{$MONGO_USER}"
+      # MONGO_INITDB_ROOT_PASSWORD: "{$MONGO_PWD}"
+      # MONGO_INITDB_DATABASE: "{$DBNAME}"
+    ports:
+    - "27018:27017"
+    volumes:
+    - ./db-data:/data/db
+    networks:
+      - app-network
+
+volumes:
+  server: {}
+  front: {}
+  db-data: {}
+
+networks:
+  app-network:
+    driver: bridge
