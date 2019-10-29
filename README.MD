@@ -14,14 +14,22 @@
 
 ## /WORDS (auth)
 
-### GET /all
+### GET /
 * RES: `{ words }`
+> all words
 
-### GET /lean?count={num}
+### GET /?lean={num}
 * RES: `{ words }`
+> random to lean
 
-### POST /add
+### POST /
 * REQ: `{ eng, rus }`
+> create
 
-### PUT /lean
-* REQ `{ id, result : true/false }`
+### DELETE /
+* REQ: `{ _id }`
+>delete
+
+### PUT /
+* REQ `{ _id, result : true/false }`
+> set statistic
