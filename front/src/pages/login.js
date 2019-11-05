@@ -5,16 +5,16 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 
-import { registerAction } from '../store/actions/actions';
+import { loginAction } from '../store/actions/actions';
 
 const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  register: registerAction,
+  login: loginAction,
 };
 
-const RegisterPage = (props) => {
+const LoginPage = (props) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,12 +22,12 @@ const RegisterPage = (props) => {
   function handleClick() {
     setEmail('');
     setPassword('');
-    props.register({email, password});
+    props.login({email, password});
   }
 
   return (
     <div>
-        <h2>Register</h2>
+        <h2>Login</h2>
         <div>
             <FormControl>
               <InputLabel htmlFor="email-field">
@@ -40,11 +40,11 @@ const RegisterPage = (props) => {
               <Input id="password-field" value={password} onInput={(e)=>setPassword(e.target.value)} type="password"/>
             </FormControl>
             <FormControl>
-              <Button color="primary" variant="contained" onClick={()=>handleClick()}>Register</Button>
+              <Button color="primary" variant="contained" onClick={()=>handleClick()}>Login</Button>
             </FormControl>
         </div>
     </div>
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

@@ -22,6 +22,8 @@ services:
       context: .
       dockerfile: front.Dockerfile
     container_name: react
+    ports:
+      - "3000:3000"
     networks:
       - app-network
     volumes:

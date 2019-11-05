@@ -14,7 +14,6 @@ export class AuthMiddleware implements NestMiddleware {
     if (!req.headers.authorization) {
       return res.json(this.authFailed());
     }
-    console.log('CONFIG', this.config.get('SECRET'));
     let token;
     try {
       token = await this.auth.verifyToken(req.headers.authorization);

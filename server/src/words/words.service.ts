@@ -9,7 +9,7 @@ import { CreateWordDTO } from './dto/create-word.dto';
 @Injectable()
 export class WordsService {
 
-  constructor(private config: ConfigService, @InjectModel('Hero') private readonly wordModel: Model<WordClass>,) {
+  constructor(private config: ConfigService, @InjectModel('Word') private readonly wordModel: Model<WordClass>,) {
   }
 
   async all() {

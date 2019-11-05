@@ -4,7 +4,13 @@ const path = require('path');
 
 module.exports = {
     mode: 'development',
-    entry: ['babel-polyfill', './src/index.js'],
+    entry: [
+        'babel-polyfill',
+        './src/index.js',
+        `webpack-dev-server/client?http://0.0.0.0:3000`,
+        'webpack/hot/only-dev-server',
+        './src/index',
+    ],
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
