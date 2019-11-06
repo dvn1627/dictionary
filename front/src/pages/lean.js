@@ -21,6 +21,7 @@ const LeanPage = (props) => {
     const [word, setWord] = useState(null);
     const [history, setHistory] = useState([]);
     const [lang, setLang] = useState('eng')
+    const [fetched, setFetched] = useState(false);
 
     function getWord(items) {
         const number = Math.floor(Math.random() * Math.floor(items.length));
@@ -32,6 +33,9 @@ const LeanPage = (props) => {
         const maxAnswers = 3;
         const correctPosition = Math.floor(Math.random() * Math.floor(maxAnswers - 1));
         let answersCount = 0;
+        if (AllItems.length <= maxAnswers) {
+            return AllItems;
+        }
         do {
             const number = Math.floor(Math.random() * Math.floor(AllItems.length));
             const item = AllItems[number];
@@ -48,9 +52,10 @@ const LeanPage = (props) => {
     }
 
     useEffect(() => {
-        if (!props.items.length) {
+        if (!fetched) {
+            setFetched(true);
             props.getItems();
-        } else if (!itemsList.length) {
+        } else if (!itemsList.length && props.items.length) {
             setItemsList(props.items);
             startLeaning(props.items);
         }

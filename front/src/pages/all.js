@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { connect } from 'react-redux';
 import Add from './add';
 
-export default function AllPage() {
+import { fetchAllAction } from '../store/actions/actions';
+
+const mapStateToProps = (state) => ({
+    items: state.items,
+    loading: state.loading,
+});
+
+const mapDispatchToProps = {
+    getItems: fetchAllAction,
+};
+
+function AllPage(props) {
 
     const [itemsList, setItemsList] = useState([]);
-
-    const options = {
-        headers: {
-            'x-api-key' : 'yybTDPxOF96jzOQa0bm4g6LM8kd9FDjw2z1hRg7q'
-        }
-    }
-    const url = 'https://et489h5atg.execute-api.us-west-2.amazonaws.com/default/Dictionary';
-
-    function fetchItems() {
-        axios.get(url, options).then( res => {
-            setItemsList(res.data);
-        }).catch( err => {
-            console.error('ERROR:', err.message);
-        })
-    }
+    const [fetched, setFetched] = useState(false);
 
     useEffect(() => {
-        if (!itemsList.length) {
-            fetchItems();
+        if (!fetched) {
+            setFetched(true);
+            props.getItems();
+        } else if (!itemsList.length && props.items.length) {
+            setItemsList(props.items);
         }
     });
 
@@ -43,9 +43,9 @@ export default function AllPage() {
     }
 
     function handleAddWord(word) {
-        console.log('adding word', word);
         setItemsList([word, ...itemsList]);
     }
+    
 
     return(
         <div>
@@ -65,3 +65,5 @@ export default function AllPage() {
         </div>
     );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllPage);

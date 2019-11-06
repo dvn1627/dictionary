@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { addWordAction } from '../store/actions/actions'
 
-export default function AddPage(props) {
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = {
+    addWordAction,
+};
+
+function AddPage(props) {
 
     const [eng, setEng] = useState('');
     const [rus, setRus] = useState('');
@@ -10,21 +19,7 @@ export default function AddPage(props) {
         if (!eng.length || !rus.length) {
             return;
         }
-        const options = {
-            headers: {
-                'x-api-key' : 'yybTDPxOF96jzOQa0bm4g6LM8kd9FDjw2z1hRg7q'
-            }
-        }
-        const url = 'https://et489h5atg.execute-api.us-west-2.amazonaws.com/default/Dictionary';
-        const data = {
-            eng,
-            rus
-        };
-        axios.post(url, data, options).then( res => {
-            setEng('');
-            setRus('');
-        }).catch( err => {
-        })
+        props.addWordAction({ eng, rus });
         props.addWord({eng, rus});
     }
 
@@ -51,3 +46,5 @@ export default function AddPage(props) {
         </div>
     );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPage);

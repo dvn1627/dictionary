@@ -5,7 +5,7 @@ import { WordsService } from './words.service';
 
 //import { AuthGuard } from './auth.guard';
 
-@Controller('api/heroes')
+@Controller('api/words')
 //@UseGuards(new AuthGuard())
 export class WordsController {
   constructor(private wordsService: WordsService) {}
