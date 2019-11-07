@@ -28,6 +28,8 @@ services:
       - app-network
     volumes:
     - ./front:/home/front
+    command:
+      bash -c "npm i && npm start"
 
   web:
     image: nginx:mainline-alpine
@@ -47,10 +49,6 @@ services:
   mongo:
     image: mongo
     container_name: mongo
-    # environment:
-      # MONGO_INITDB_ROOT_USERNAME: "{$MONGO_USER}"
-      # MONGO_INITDB_ROOT_PASSWORD: "{$MONGO_PWD}"
-      # MONGO_INITDB_DATABASE: "{$DBNAME}"
     ports:
     - "27018:27017"
     volumes:
