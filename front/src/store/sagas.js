@@ -15,6 +15,7 @@ import {
   WORD_ADDED,
   SEND_STATISTIC,
   EXIT,
+  FETCH_LEAN,
 } from './actions/actions';
 
 const urlApi = 'http://localhost:88/api/';
@@ -30,6 +31,22 @@ function* fetchAll() {
   }
   yield put({ type: FETCH_START });
   const json = yield fetch(urlApi + 'words', options)
+    .then(response => response.json(), );
+  yield put({ type: ITEMS_RECEIVED, json: json.data });
+  yield put({ type: FETCH_DONE });
+}
+
+function* fetchLean() {
+  const token = yield select(getToken);
+  const options = {
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': token
+    },
+  }
+  yield put({ type: FETCH_START });
+  const json = yield fetch(urlApi + 'words/lean', options)
     .then(response => response.json(), );
   yield put({ type: ITEMS_RECEIVED, json: json.data });
   yield put({ type: FETCH_DONE });
@@ -149,6 +166,7 @@ function* actionWatcher() {
   yield takeLatest(ADD_WORD, addWord);
   yield takeLatest(DELETE_WORD, deleteWord);
   yield takeLatest(SEND_STATISTIC, sendStatistic);
+  yield takeLatest(FETCH_LEAN, fetchLean);
 }
 
 export default function* rootSaga() {

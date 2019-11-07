@@ -17,6 +17,11 @@ export class WordsController {
     return this.wordsService.all();
   }
 
+  @Get('lean')
+  async lean() {
+    return this.wordsService.lean();
+  }
+
   @Post()
   async createWord(@Body() createWordDTO: CreateWordDTO) {
     return this.wordsService.create(createWordDTO);

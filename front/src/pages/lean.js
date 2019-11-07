@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { fetchAllAction, sendStatisticAction } from '../store/actions/actions';
+import { fetchLeanAction, sendStatisticAction } from '../store/actions/actions';
 
 const mapStateToProps = (state) => ({
     items: state.items,
@@ -11,7 +11,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    getItems: fetchAllAction,
+    getItems: fetchLeanAction,
     sendStat: sendStatisticAction,
 };
 

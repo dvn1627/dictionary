@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Input from '@material-ui/core/Input';
 
-import { fetchAllAction } from '../store/actions/actions';
+import { fetchLeanAction } from '../store/actions/actions';
 
 const mapStateToProps = (state) => ({
     items: state.items,
@@ -12,7 +12,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    getItems: fetchAllAction,
+    getItems: fetchLeanAction,
 };
 
 const LeanHarderPage = (props) => {

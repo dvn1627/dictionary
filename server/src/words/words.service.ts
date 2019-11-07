@@ -53,4 +53,11 @@ export class WordsService {
       data: { word }
     }
   }
+
+  async lean() {
+    const words:Array<WordClass> = await this.wordModel.find().sort({ showed: 'asc'}).limit(10);
+    return {
+      data: words,
+    };
+  }
 }
