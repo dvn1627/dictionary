@@ -14,6 +14,7 @@ const mapDispatchToProps = {
 const cabinetRoutes = [
   '/dictionary',
   '/lean',
+  '/lean-2',
 ]
 
 const Navigation = (props) => {
@@ -41,6 +42,7 @@ const Navigation = (props) => {
           props.isLogin ? (
             <nav className="main-navigation">
               <Link to='/lean'>Lean</Link>
+              <Link to='/lean-2'>Lean-2</Link>
               <Link to='/dictionary'>Dictionary</Link>
               <Link to='/' onClick={(e) => handleExit(e)}>exit</Link>
             </nav>

@@ -11,6 +11,7 @@ import RegisterPage from './pages/register';
 import LoginPage from './pages/login';
 import MessagesList from './components/messagesList';
 import Navigation from './components/navigation';
+import LeanHarderPage from './pages/leanHarder';
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -37,19 +38,22 @@ function App() {
       <Router>
         <Navigation />
         <Switch>
-            <Route path="/register">
+            <Route path="/register" exact>
               <RegisterPage />
             </Route>
-            <Route path="/login">
+            <Route path="/login" exact>
               <LoginPage />
             </Route>
-            <Route path="/dictionary">
+            <Route path="/dictionary" exact>
               <AllPage />
             </Route>
-            <Route path="/lean">
+            <Route path="/lean-2" exact>
+              <LeanHarderPage />
+            </Route>
+            <Route path="/lean" exact>
               <LeanPage />
             </Route>
-            <Route path="/">
+            <Route path="/" exact>
               <LoginPage />
             </Route>
         </Switch>
