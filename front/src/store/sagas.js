@@ -9,11 +9,12 @@ import {
   REGISTER,
   SET_TOKEN,
   ADD_MESSAGE,
-  EXIT,
   ADD_WORD,
   DELETE_WORD,
   WORD_DELETED,
   WORD_ADDED,
+  SEND_STATISTIC,
+  EXIT,
 } from './actions/actions';
 
 const urlApi = 'http://localhost:88/api/';
@@ -68,6 +69,10 @@ function* register({ payload }) {
   }
   if (json.error) {
     yield put({ type: ADD_MESSAGE, text: json.error });
+    yield put({ type: EXIT});
+    if (json.error === 'unautorized') {
+      //yield put({ type: EXIT});
+    }
   }
 }
 
@@ -121,12 +126,29 @@ function* deleteWord({payload}) {
   }
 }
 
+function* sendStatistic({payload}) {
+  const token = yield select(getToken);
+  const options = {
+    method: 'PUT',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': token
+    },
+    body: JSON.stringify(payload)
+  }
+  yield fetch(urlApi + 'words', options)
+    .then(response => response.json(), )
+    .catch( e => console.log('ERROR', e));
+}
+
 function* actionWatcher() {
   yield takeLatest(FETCH_ALL, fetchAll);
   yield takeLatest(REGISTER, register);
   yield takeLatest(LOGIN, login);
   yield takeLatest(ADD_WORD, addWord);
   yield takeLatest(DELETE_WORD, deleteWord);
+  yield takeLatest(SEND_STATISTIC, sendStatistic);
 }
 
 export default function* rootSaga() {

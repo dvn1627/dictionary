@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Query, Put, Delete, Headers, Request, UseGuards} from '@nestjs/common';
 import { CreateWordDTO } from './dto/create-word.dto';
 import { DeleteWordDTO } from './dto/delete-word.dto';
+import { StatisticWordDTO } from './dto/statistic-word.dto'
 
 import { WordsService } from './words.service';
 
@@ -24,5 +25,10 @@ export class WordsController {
   @Delete()
   async deleteWords(@Body() deleteWordDTO:DeleteWordDTO)  {
     return this.wordsService.delete(deleteWordDTO);
+  }
+
+  @Put()
+  async setStatistic(@Body() setStatisticDTO: StatisticWordDTO) {
+    return this.wordsService.setStatistic(setStatisticDTO);
   }
 }

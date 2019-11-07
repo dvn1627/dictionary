@@ -6,6 +6,7 @@ import { WordClass } from '../schemas/word.class';
 import { ConfigService } from '../config/config.service';
 import { CreateWordDTO } from './dto/create-word.dto';
 import { DeleteWordDTO } from './dto/delete-word.dto';
+import { StatisticWordDTO } from './dto/statistic-word.dto';
 
 @Injectable()
 export class WordsService {
@@ -32,6 +33,21 @@ export class WordsService {
   async delete(deleteWordDTO: DeleteWordDTO) {
     const word = await this.wordModel.findById(deleteWordDTO._id);
     await word.delete();
+    return {
+      message: 'word deleted',
+      data: { word }
+    }
+  }
+
+  async setStatistic(statisticWordDTO: StatisticWordDTO) {
+    const word = await this.wordModel.findById(statisticWordDTO._id);
+    word.showed++;
+    if (statisticWordDTO.result) {
+      word.correct++;
+    } else {
+      word.wrong++;
+    }
+    await word.save();
     return {
       message: 'word deleted',
       data: { word }

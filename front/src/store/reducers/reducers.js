@@ -51,7 +51,7 @@ const token = (state = '', action) => {
 const messages = (state = [], action) => {
   switch (action.type) {
     case ADD_MESSAGE:
-      return [...state, action.text].slice(-5);
+      return [...state, action.text].slice(5);
     default:
       return state;
   }

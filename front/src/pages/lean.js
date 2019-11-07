@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { fetchAllAction } from '../store/actions/actions';
+import { fetchAllAction, sendStatisticAction } from '../store/actions/actions';
 
 const mapStateToProps = (state) => ({
     items: state.items,
@@ -12,6 +12,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     getItems: fetchAllAction,
+    sendStat: sendStatisticAction,
 };
 
 const LeanPage = (props) => {
@@ -71,6 +72,7 @@ const LeanPage = (props) => {
         const field = lang === 'eng' ? 'rus' : 'eng';
         let result = item[field] === word[field];
         const newHistory = [{word, result}, ...history];
+        props.sendStat({_id: word._id, result});
         setHistory(newHistory);
         startLeaning(itemsList);
     }
