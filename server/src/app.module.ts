@@ -1,8 +1,6 @@
 import { Module, NestModule, RequestMethod, MiddlewareConsumer } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from './config/config.module';
 import { UsersModule } from './users/users.module';
 import { ConfigService } from './config/config.service';
@@ -15,11 +13,8 @@ const databaseUrl = config.get('DB_URL') + ':' + config.get('DB_PORT') + '/' + c
 console.log('CONNECTING TO DB=', databaseUrl);
 @Module({
   imports: [MongooseModule.forRoot(databaseUrl), ConfigModule, UsersModule, WordsModule],
-  controllers: [AppController],
-  providers: [AppService, AuthService],
+  providers: [AuthService],
 })
-//export class AppModule {}
-// USE MIDDLEWARE
 export class AppModule implements NestModule{
   configure(consumer: MiddlewareConsumer) {
     consumer
