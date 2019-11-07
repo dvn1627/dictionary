@@ -21,6 +21,8 @@ function AddPage(props) {
         }
         props.addWordAction({ eng, rus });
         props.addWord({eng, rus});
+        setEng('');
+        setRus('');
     }
 
     function handleChangeEng(value) {

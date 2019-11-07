@@ -7,12 +7,18 @@ import {
   SET_TOKEN,
   ADD_MESSAGE,
   EXIT,
+  WORD_DELETED,
+  WORD_ADDED,
 } from '../actions/actions'
 
 const items = (state = [], action) => {
   switch (action.type) {
     case ITEMS_RECEIVED:
       return action.json;
+    case WORD_DELETED:
+      return state.filter( word => word._id !== action._id);
+    case WORD_ADDED:
+      return [...state, action.json.data.word];
     default:
       return state
   }
@@ -45,7 +51,7 @@ const token = (state = '', action) => {
 const messages = (state = [], action) => {
   switch (action.type) {
     case ADD_MESSAGE:
-      return [...state, action.text];
+      return [...state, action.text].slice(-5);
     default:
       return state;
   }

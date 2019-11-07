@@ -11,14 +11,10 @@ import {
   ADD_MESSAGE,
   EXIT,
   ADD_WORD,
+  DELETE_WORD,
+  WORD_DELETED,
+  WORD_ADDED,
 } from './actions/actions';
-
-const url = 'https://et489h5atg.execute-api.us-west-2.amazonaws.com/default/Dictionary';
-const options = {
-    headers: {
-        'x-api-key' : 'yybTDPxOF96jzOQa0bm4g6LM8kd9FDjw2z1hRg7q'
-    }
-}
 
 const urlApi = 'http://localhost:88/api/';
 
@@ -34,7 +30,6 @@ function* fetchAll() {
   yield put({ type: FETCH_START });
   const json = yield fetch(urlApi + 'words', options)
     .then(response => response.json(), );
-  console.log('get words', json);
   yield put({ type: ITEMS_RECEIVED, json: json.data });
   yield put({ type: FETCH_DONE });
 }
@@ -92,9 +87,33 @@ function* addWord({ payload }) {
   const json = yield fetch(urlApi + 'words', options)
     .then(response => response.json(), )
     .catch( e => console.log('ERROR', e));
-  if (json.token) {
-    //yield put({ type: SET_TOKEN, token: json.token });
+  if (json.message) {
+    yield put({ type: WORD_ADDED, json });
     yield put({ type: ADD_MESSAGE, text: 'word added' });
+  }
+  if (json.error) {
+    console.error('ERROR', json)
+    yield put({ type: ADD_MESSAGE, text: json.error });
+  }
+}
+
+function* deleteWord({payload}) {
+  const token = yield select(getToken);
+  const options = {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': token
+    },
+    body: JSON.stringify(payload)
+  }
+  const json = yield fetch(urlApi + 'words', options)
+    .then(response => response.json(), )
+    .catch( e => console.log('ERROR', e));
+  if (json.message) {
+    yield put({type: WORD_DELETED, _id: payload._id});
+    yield put({ type: ADD_MESSAGE, text: 'word deleted' });
   }
   if (json.error) {
     console.error('ERROR', json)
@@ -107,6 +126,7 @@ function* actionWatcher() {
   yield takeLatest(REGISTER, register);
   yield takeLatest(LOGIN, login);
   yield takeLatest(ADD_WORD, addWord);
+  yield takeLatest(DELETE_WORD, deleteWord);
 }
 
 export default function* rootSaga() {

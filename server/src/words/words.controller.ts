@@ -4,10 +4,10 @@ import { DeleteWordDTO } from './dto/delete-word.dto';
 
 import { WordsService } from './words.service';
 
-import { AuthGuard } from '../users/auth.guard';
+// import { AuthGuard } from '../users/auth.guard';
 
 @Controller('api/words')
-@UseGuards(new AuthGuard())
+// @UseGuards(new AuthGuard())
 export class WordsController {
   constructor(private wordsService: WordsService) {}
 
