@@ -32,7 +32,8 @@ function* fetchAll() {
   yield put({ type: FETCH_START });
   const json = yield fetch(urlApi + 'words', options)
     .then(response => response.json(), );
-  yield put({ type: ITEMS_RECEIVED, json: json.data });
+  yield handleApiError(json);
+  yield put({ type: ITEMS_RECEIVED, json: json.data || []});
   yield put({ type: FETCH_DONE });
 }
 
@@ -48,7 +49,8 @@ function* fetchLean() {
   yield put({ type: FETCH_START });
   const json = yield fetch(urlApi + 'words/lean', options)
     .then(response => response.json(), );
-  yield put({ type: ITEMS_RECEIVED, json: json.data });
+  yield handleApiError(json);
+  yield put({ type: ITEMS_RECEIVED, json: json.data || [] });
   yield put({ type: FETCH_DONE });
 }
 
@@ -63,6 +65,7 @@ function* login({payload}) {
   }
   const json = yield fetch(urlApi + 'users/login', options)
     .then(response => response.json(), );
+  yield handleApiError(json);
   if (json.token) {
     yield put({ type: SET_TOKEN, token: json.token });
     yield put({ type: ADD_MESSAGE, text: 'login successful' });
@@ -80,16 +83,10 @@ function* register({ payload }) {
   }
   const json = yield fetch(urlApi + 'users/register', options)
     .then(response => response.json(), );
+  yield handleApiError(json);
   if (json.token) {
     yield put({ type: SET_TOKEN, token: json.token });
     yield put({ type: ADD_MESSAGE, text: 'register successful' });
-  }
-  if (json.error) {
-    yield put({ type: ADD_MESSAGE, text: json.error });
-    yield put({ type: EXIT});
-    if (json.error === 'unautorized') {
-      //yield put({ type: EXIT});
-    }
   }
 }
 
@@ -107,15 +104,11 @@ function* addWord({ payload }) {
     body: JSON.stringify(payload)
   }
   const json = yield fetch(urlApi + 'words', options)
-    .then(response => response.json(), )
-    .catch( e => console.log('ERROR', e));
+    .then(response => response.json(), );
+  yield handleApiError(json);
   if (json.message) {
     yield put({ type: WORD_ADDED, json });
     yield put({ type: ADD_MESSAGE, text: 'word added' });
-  }
-  if (json.error) {
-    console.error('ERROR', json)
-    yield put({ type: ADD_MESSAGE, text: json.error });
   }
 }
 
@@ -131,15 +124,11 @@ function* deleteWord({payload}) {
     body: JSON.stringify(payload)
   }
   const json = yield fetch(urlApi + 'words', options)
-    .then(response => response.json(), )
-    .catch( e => console.log('ERROR', e));
+    .then(response => response.json(), );
+  yield handleApiError(json);
   if (json.message) {
     yield put({type: WORD_DELETED, _id: payload._id});
     yield put({ type: ADD_MESSAGE, text: 'word deleted' });
-  }
-  if (json.error) {
-    console.error('ERROR', json)
-    yield put({ type: ADD_MESSAGE, text: json.error });
   }
 }
 
@@ -154,9 +143,18 @@ function* sendStatistic({payload}) {
     },
     body: JSON.stringify(payload)
   }
-  yield fetch(urlApi + 'words', options)
-    .then(response => response.json(), )
-    .catch( e => console.log('ERROR', e));
+  const json = yield fetch(urlApi + 'words', options)
+    .then(response => response.json(), );
+  yield handleApiError(json);
+}
+
+function* handleApiError(json) {
+  if (json.error) {
+    yield put({ type: ADD_MESSAGE, text: json.error.message || json.error });
+  }
+  if (json.error && json.error === 'not authorized') {
+    yield put({type: EXIT});
+  }
 }
 
 function* actionWatcher() {

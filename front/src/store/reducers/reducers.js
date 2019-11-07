@@ -9,7 +9,6 @@ import {
   EXIT,
   WORD_DELETED,
   WORD_ADDED,
-  FETCH_LEAN,
 } from '../actions/actions'
 
 const items = (state = [], action) => {
@@ -65,4 +64,4 @@ const rootReducer = combineReducers({
   messages,
 })
 
-export default rootReducer
+export default rootReducer;

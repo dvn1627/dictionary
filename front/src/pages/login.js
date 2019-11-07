@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
