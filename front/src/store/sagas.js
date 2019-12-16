@@ -18,7 +18,10 @@ import {
   FETCH_LEAN,
 } from './actions/actions';
 
-const urlApi = 'http://localhost:88/api/';
+//const urlApi = process.env.HOST + '/api/';
+const urlApi = 'api/';
+
+console.log('ENV', process.env);
 
 function* fetchAll() {
   const token = yield select(getToken);

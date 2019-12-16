@@ -58,6 +58,12 @@ const LeanHarderPage = (props) => {
     setLang(newLang);
   }
 
+  function handleKeyPress(event) {
+    if(event.key === 'Enter'){
+      check();
+    }
+  }
+
   const otherLang = lang === 'eng' ? 'rus' : 'eng';
 
   return (
@@ -70,6 +76,7 @@ const LeanHarderPage = (props) => {
       <Input
         value={inputWord}
         onInput={(e) => setInputWord(e.target.value)}
+        onKeyPress={(e)=> handleKeyPress(e)}
       />
       <Button variant="contained" onClick={() => check()}>Check</Button>
       { props.loading ? (<CircularProgress />)

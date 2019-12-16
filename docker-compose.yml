@@ -30,6 +30,7 @@ services:
     - ./front:/home/front
     command:
       bash -c "npm i && npm start"
+    
 
   web:
     image: nginx:mainline-alpine

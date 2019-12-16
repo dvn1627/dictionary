@@ -33,7 +33,8 @@ module.exports = {
     devServer: {
         contentBase: './dist',
         overlay: true,
-        hot: true
+        hot: true,
+        disableHostCheck: true
     },
     plugins: [
         new CopyWebpackPlugin(['index.html']),
